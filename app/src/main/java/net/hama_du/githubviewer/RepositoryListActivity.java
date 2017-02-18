@@ -1,6 +1,8 @@
 package net.hama_du.githubviewer;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -23,58 +26,62 @@ import com.google.gson.GsonBuilder;
 
 import net.hama_du.githubviewer.model.Repository;
 import net.hama_du.githubviewer.model.RepositorySearchResponse;
+import net.hama_du.githubviewer.request.RepositoryRequest;
+import net.hama_du.githubviewer.request.RequestHandler;
 
 public class RepositoryListActivity extends AppCompatActivity {
     private ListView listView;
 
     private RepositoryListAdapter adapter;
 
-    private RequestQueue requestQueue;
-
-    private Gson gson;
+    private RequestHandler requestHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repository_list);
 
-        requestQueue = Volley.newRequestQueue(this);
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.create();
+        requestHandler = RequestHandler.getInstance(getApplicationContext());
 
         listView = (ListView) findViewById(R.id.repository_list);
         listView.setDivider(null);
         adapter = new RepositoryListAdapter(getApplicationContext());
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListView listView = (ListView) parent;
+                Repository repo = (Repository) listView.getItemAtPosition(position);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(repo.url));
+                getApplicationContext().startActivity(browserIntent);
+            }
+        });
     }
 
     private void fetchRepositories(String query) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
+        progressDialog.setMessage("Searching Repositories...");
         progressDialog.show();
 
-        StringRequest request = new StringRequest(
-                Request.Method.GET, "https://api.github.com/search/repositories?q=" + query,
-                new Response.Listener<String>() {
+        StringRequest request = RepositoryRequest.get(
+                query,
+                new Response.Listener<RepositorySearchResponse>() {
                     @Override
-                    public void onResponse(String response) {
-                        RepositorySearchResponse repositorySearchResponse = gson.fromJson(response, RepositorySearchResponse.class);
-
+                    public void onResponse(RepositorySearchResponse response) {
                         adapter.clear();
-                        adapter.addAll(repositorySearchResponse.repositories);
-
-                        progressDialog.hide();
+                        adapter.addAll(response.repositories);
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("rsr", error.toString());
-                        progressDialog.hide();
+                        progressDialog.dismiss();
                     }
                 }
         );
-        requestQueue.add(request);
+        requestHandler.addToRequestQueue(request);
     }
 
     public void searchRepositories(View view) {
