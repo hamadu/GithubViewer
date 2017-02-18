@@ -1,0 +1,54 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="446dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <EditText android:id="@+id/edit_message"
+            android:layout_width="285dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_message" />
+
+        <Button
+            android:text="@string/button_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="sendMessage"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <Button
+            android:text="あぷりいちらん"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="gotoApplicationList"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="れぽいちらん"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="gotoRepositoryList"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

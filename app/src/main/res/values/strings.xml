@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">GithubViewer</string>
+    <string name="edit_message">メッセージ入れて</string>
+    <string name="button_send">おくる</string>
+    <string name="suffix">！！</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_application_list">ApplicationListActivity</string>
+    <string name="title_activity_repository_list">RepositoryList</string>
+</resources>

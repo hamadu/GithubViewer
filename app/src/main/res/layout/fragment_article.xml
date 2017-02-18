@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#cc0000">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_alignParentTop="true"
+        android:text="あか"
+        android:id="@+id/name_view"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="500sp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="ho"
+        android:id="@+id/text_view"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:text="ho"
+        android:id="@+id/color_view"
+        android:textSize="80sp"
+        android:textStyle="bold"
+        android:textColor="#55ffff"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        />
+
+    <TextView
+        android:id="@+id/page_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="24sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        />
+</RelativeLayout>
